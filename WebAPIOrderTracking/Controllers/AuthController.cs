@@ -30,9 +30,13 @@ namespace WebAPIOrderTracking.Controllers
                   }                 
                   var users = _context.Users;
 
+                 
+
                   var findUser = users.FirstOrDefault(u => u.Username == user.UserName);
+                  
 
                   if (findUser != null)
+                  
                   {
                       if (SecretHasher.Verify(user.Password, findUser.Userpassword))
                       {
