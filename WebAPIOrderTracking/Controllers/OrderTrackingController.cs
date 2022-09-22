@@ -38,7 +38,7 @@ namespace OrderTrackingWebAPI.Controllers
         }
 
         [HttpPost]
-        
+        [Authorize]
         [Route("AddOrder")]
         public IActionResult AddOrder([FromBody]Order order)
         {
@@ -57,6 +57,31 @@ namespace OrderTrackingWebAPI.Controllers
             }
             
         }
-    
+
+        [HttpDelete]
+        [Authorize]
+        [Route("DeleteOrder")]
+        public IActionResult DeleteOrder(int id)
+        {
+            //try
+            //{
+            //    var orderForRemove = _context.Orders.FirstOrDefault(i => i.Orderid == id);
+            //    if (orderForRemove is Order o) 
+            //    {
+            //        _context.Orders.Remove(o);
+            //        _context.SaveChanges();
+            //        return Ok();
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Заказа не существует");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Conflict(new { error = ex.Message });
+            //}
+            return Conflict(new { error = "ошибка" });
+        }
     }
 }
