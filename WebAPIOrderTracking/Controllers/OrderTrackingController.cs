@@ -12,9 +12,9 @@ namespace OrderTrackingWebAPI.Controllers
     public class OrderTrackingController : ControllerBase
     {
         private readonly ILogger<OrderTrackingController> _logger;
-        private readonly OrderTrackingContext _context;
+        private readonly db_a8d4ba_ordertrackingContext _context;
 
-        public OrderTrackingController(ILogger<OrderTrackingController> logger, OrderTrackingContext context)
+        public OrderTrackingController(ILogger<OrderTrackingController> logger, db_a8d4ba_ordertrackingContext context)
         {
             _logger = logger;
             _context = context;
@@ -29,7 +29,7 @@ namespace OrderTrackingWebAPI.Controllers
             if (!String.IsNullOrEmpty(filterModel.Order))
                 query = query.Where(i => i.Ordername.Contains(filterModel.Order));
             if (!String.IsNullOrEmpty(filterModel.LastName))
-                query = query.Where(i => i.Lastname.Contains(filterModel.LastName));
+                query = query.Where(i => i.Ordername.Contains(filterModel.LastName));
             return query.ToList();
         }
 
@@ -45,7 +45,7 @@ namespace OrderTrackingWebAPI.Controllers
         [HttpPost]
         [Authorize]
         [Route("AddOrder")]
-        public IActionResult AddOrder([FromBody]Order order)
+        public IActionResult AddOrder([FromBody] Order order)
         {
             try
             {
@@ -60,13 +60,13 @@ namespace OrderTrackingWebAPI.Controllers
             {
                 return Conflict(new { error = ex.Message });
             }
-            
+
         }
 
         [HttpPut]
         [Authorize]
         [Route("EditOrder")]
-        public IActionResult EditOrder([FromBody]Order order)
+        public IActionResult EditOrder([FromBody] Order order)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace OrderTrackingWebAPI.Controllers
             try
             {
                 var orderForRemove = _context.Orders.FirstOrDefault(i => i.Orderid == id);
-                if (orderForRemove is Order o) 
+                if (orderForRemove is Order o)
                 {
                     _context.Orders.Remove(o);
                     _context.SaveChanges();

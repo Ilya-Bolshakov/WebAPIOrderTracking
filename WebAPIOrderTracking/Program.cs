@@ -12,6 +12,10 @@ namespace WebAPIOrderTracking
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<db_a8d4ba_ordertrackingContext>(options =>
+            {
+                options.UseSqlServer("name=Connection");
+            });
       // Add services to the container.
             builder.Services.AddAuthentication(opt => {
               opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -41,10 +45,7 @@ namespace WebAPIOrderTracking
               });
             });
 
-            builder.Services.AddDbContext<OrderTrackingContext>(options =>
-            {
-                options.UseNpgsql(builder.Configuration.GetConnectionString("Connection"));
-            });
+            
 
             builder.Services.AddControllers();
 

@@ -10,50 +10,47 @@ using WebAPIOrderTracking.Models.Entities;
 
 namespace WebAPIOrderTracking.Controllers
 {
-      [Route("api/auth")]
-      [ApiController]
-      public class AuthController : ControllerBase
-      {
-            private readonly OrderTrackingContext _context;
+    [Route("api/auth")]
+    [ApiController]
+    public class AuthController : ControllerBase
+    {
+        private readonly db_a8d4ba_ordertrackingContext _context;
 
-            public AuthController(OrderTrackingContext context)
+        public AuthController(db_a8d4ba_ordertrackingContext context)
+        {
+            _context = context;
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginModel user)
+        {
+            if (user is null)
             {
-               _context = context;
+                return BadRequest("Invalid client request");
             }
+            var users = _context.Users;
 
-            [HttpPost("login")]
-            public IActionResult Login([FromBody] LoginModel user)
+            var findUser = users.FirstOrDefault(u => u.Username == user.UserName);
+
+
+            if (findUser != null)
             {
-                  if (user is null)
-                  {
-                        return BadRequest("Invalid client request");
-                  }                 
-                  var users = _context.Users;
-
-                 
-
-                  var findUser = users.FirstOrDefault(u => u.Username == user.UserName);
-                  
-
-                  if (findUser != null)
-                  
-                  {
-                      if (SecretHasher.Verify(user.Password, findUser.Userpassword))
-                      {
-                          var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
-                          var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                          var tokeOptions = new JwtSecurityToken(
-                          issuer: "https://localhost:7195",
-                          audience: "https://localhost:7195",
-                          claims: new List<Claim>(),
-                          expires: DateTime.Now.AddMinutes(5),
-                          signingCredentials: signinCredentials
-                          );
-                          var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                          return Ok(new AuthenticatedResponse { Token = tokenString });
-                      }
-                  }
-                  return Unauthorized();
+                if (SecretHasher.Verify(user.Password, findUser.Userpassword))
+                {
+                    var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                    var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+                    var tokeOptions = new JwtSecurityToken(
+                    issuer: "https://localhost:7195",
+                    audience: "https://localhost:7195",
+                    claims: new List<Claim>(),
+                    expires: DateTime.Now.AddMinutes(5),
+                    signingCredentials: signinCredentials
+                    );
+                    var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                    return Ok(new AuthenticatedResponse { Token = tokenString });
+                }
             }
-      }
+            return Unauthorized();
+        }
+    }
 }
