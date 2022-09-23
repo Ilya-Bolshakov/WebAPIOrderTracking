@@ -12,7 +12,7 @@ namespace WebAPIOrderTracking
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<db_a8d4ba_ordertrackingContext>(options =>
+            builder.Services.AddDbContext<OrderTrackingContext>(options =>
             {
                 options.UseSqlServer("name=Connection");
             });

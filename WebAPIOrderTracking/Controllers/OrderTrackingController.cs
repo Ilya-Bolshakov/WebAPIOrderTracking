@@ -12,9 +12,9 @@ namespace OrderTrackingWebAPI.Controllers
     public class OrderTrackingController : ControllerBase
     {
         private readonly ILogger<OrderTrackingController> _logger;
-        private readonly db_a8d4ba_ordertrackingContext _context;
+        private readonly OrderTrackingContext _context;
 
-        public OrderTrackingController(ILogger<OrderTrackingController> logger, db_a8d4ba_ordertrackingContext context)
+        public OrderTrackingController(ILogger<OrderTrackingController> logger, OrderTrackingContext context)
         {
             _logger = logger;
             _context = context;

@@ -14,9 +14,9 @@ namespace WebAPIOrderTracking.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly db_a8d4ba_ordertrackingContext _context;
+        private readonly OrderTrackingContext _context;
 
-        public AuthController(db_a8d4ba_ordertrackingContext context)
+        public AuthController(OrderTrackingContext context)
         {
             _context = context;
         }

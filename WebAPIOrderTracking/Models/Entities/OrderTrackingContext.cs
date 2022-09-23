@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace WebAPIOrderTracking.Models.Entities
 {
-    public partial class db_a8d4ba_ordertrackingContext : DbContext
+    public partial class OrderTrackingContext : DbContext
     {
-        public db_a8d4ba_ordertrackingContext()
+        public OrderTrackingContext()
         {
         }
 
-        public db_a8d4ba_ordertrackingContext(DbContextOptions<db_a8d4ba_ordertrackingContext> options)
+        public OrderTrackingContext(DbContextOptions<OrderTrackingContext> options)
             : base(options)
         {
         }
@@ -42,6 +42,7 @@ namespace WebAPIOrderTracking.Models.Entities
                 entity.Property(e => e.Lastname)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+
 
                 entity.Property(e => e.Ordername)
                     .HasMaxLength(50)
