@@ -58,6 +58,24 @@ namespace OrderTrackingWebAPI.Controllers
             
         }
 
+        [HttpPut]
+        [Authorize]
+        [Route("EditOrder")]
+        public IActionResult EditOrder([FromBody]Order order)
+        {
+            try
+            {
+                order.Updatedate = DateTime.Now;
+                _context.Orders.Update(order);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Conflict(new { error = ex.Message });
+            }
+        }
+
         [HttpDelete]
         [Authorize]
         [Route("DeleteOrder")]
