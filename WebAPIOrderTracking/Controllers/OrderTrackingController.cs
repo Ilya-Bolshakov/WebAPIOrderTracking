@@ -25,7 +25,12 @@ namespace OrderTrackingWebAPI.Controllers
         [Authorize]
         public IEnumerable<Order> GetOrders([FromBody] FilterModel filterModel)
         {
-            return _context.Orders.ToList();
+            var query = _context.Orders.AsQueryable();
+            if (!String.IsNullOrEmpty(filterModel.Order))
+                query = query.Where(i => i.Ordername.Contains(filterModel.Order));
+            if (!String.IsNullOrEmpty(filterModel.LastName))
+                query = query.Where(i => i.Lastname.Contains(filterModel.LastName));
+            return query.ToList();
         }
 
 
