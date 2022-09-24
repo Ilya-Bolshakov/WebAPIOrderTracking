@@ -34,14 +34,14 @@ namespace WebAPIOrderTracking.Controllers
 
 
             if (findUser != null)
-            {
+            {   
                 if (SecretHasher.Verify(user.Password, findUser.Userpassword))
                 {
                     var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                     var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                     var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:7195",
-                    audience: "https://localhost:7195",
+                    issuer: "https://www.ordertracking.somee.com",
+                    audience: "https://www.ordertracking.somee.com",
                     claims: new List<Claim>(),
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signinCredentials
