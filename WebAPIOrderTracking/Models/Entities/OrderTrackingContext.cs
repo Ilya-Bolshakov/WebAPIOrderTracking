@@ -31,22 +31,13 @@ namespace WebAPIOrderTracking.Models.Entities
         {
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.Description)
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
+                entity.Property(e => e.Description).HasMaxLength(250);
 
-                entity.Property(e => e.Firstname)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Firstname).HasMaxLength(50);
 
-                entity.Property(e => e.Lastname)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
+                entity.Property(e => e.Lastname).HasMaxLength(50);
 
-
-                entity.Property(e => e.Ordername)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                entity.Property(e => e.Ordername).HasMaxLength(50);
 
                 entity.Property(e => e.Updatedate).HasColumnType("smalldatetime");
 
