@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using WebAPIOrderTracking.Guards.Interfaces;
+using WebAPIOrderTracking.Guards.Logic;
 using WebAPIOrderTracking.Models.Entities;
 
 namespace WebAPIOrderTracking
@@ -16,6 +18,7 @@ namespace WebAPIOrderTracking
             {
                 options.UseSqlServer("name=Connection");
             });
+            builder.Services.AddTransient<IAuthLogic, JwtAuthLogic>();
       // Add services to the container.
             builder.Services.AddAuthentication(opt => {
               opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -1,8 +1,9 @@
 using System.Security.Cryptography;
+using WebAPIOrderTracking.Guards.Interfaces;
 
-namespace WebAPIOrderTracking.Guards
+namespace WebAPIOrderTracking.Guards.Hashers
 {
-  public static class SecretHasher
+    public class SecretHasher : IHasherable
     {
         private const int _saltSize = 16; // 128 bits
         private const int _keySize = 32; // 256 bits
@@ -11,7 +12,7 @@ namespace WebAPIOrderTracking.Guards
 
         private const char segmentDelimiter = ':';
 
-        public static string Hash(string secret)
+        public string Hash(string secret)
         {
             var salt = RandomNumberGenerator.GetBytes(_saltSize);
             var key = Rfc2898DeriveBytes.Pbkdf2(
@@ -30,21 +31,21 @@ namespace WebAPIOrderTracking.Guards
             );
         }
 
-        public static bool Verify(string secret, string hash)
+        public bool Verify(string secret, string hash)
         {
-          var segments = hash.Split(segmentDelimiter);
-          var key = Convert.FromHexString(segments[0]);
-          var salt = Convert.FromHexString(segments[1]);
-          var iterations = int.Parse(segments[2]);
-          var algorithm = new HashAlgorithmName(segments[3]);
-          var inputSecretKey = Rfc2898DeriveBytes.Pbkdf2(
-              secret,
-              salt,
-              iterations,
-              algorithm,
-              key.Length
-          );
-          return key.SequenceEqual(inputSecretKey);
+            var segments = hash.Split(segmentDelimiter);
+            var key = Convert.FromHexString(segments[0]);
+            var salt = Convert.FromHexString(segments[1]);
+            var iterations = int.Parse(segments[2]);
+            var algorithm = new HashAlgorithmName(segments[3]);
+            var inputSecretKey = Rfc2898DeriveBytes.Pbkdf2(
+                secret,
+                salt,
+                iterations,
+                algorithm,
+                key.Length
+            );
+            return key.SequenceEqual(inputSecretKey);
         }
     }
 }
