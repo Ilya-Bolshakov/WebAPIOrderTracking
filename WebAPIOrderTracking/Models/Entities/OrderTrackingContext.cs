@@ -23,7 +23,7 @@ namespace WebAPIOrderTracking.Models.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=SQL8002.site4now.net;Initial Catalog=db_a8d4ba_ordertracking;User Id=db_a8d4ba_ordertracking_admin;Password=qazwsxedc123-");
+                optionsBuilder.UseSqlServer("name=Connection");
             }
         }
 
