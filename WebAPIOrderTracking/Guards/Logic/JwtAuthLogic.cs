@@ -12,17 +12,19 @@ namespace WebAPIOrderTracking.Guards.Logic
     public class JwtAuthLogic : IAuthLogic
     {
         private readonly IHasherable _hasher;
+        private readonly IConfiguration _config;
 
-        public JwtAuthLogic(IHasherable hasher)
+        public JwtAuthLogic(IHasherable hasher, IConfiguration configuration)
         {
             _hasher = hasher;
+            _config = configuration;
         }
 
         public bool TryLogin(User user, LoginModel loginModel, out string result)
         {
             if (_hasher.Verify(loginModel.Password, user.Userpassword))
             {
-                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+                var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("Secret:jwt")));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
                 issuer: "https://www.ordertracking.somee.com",

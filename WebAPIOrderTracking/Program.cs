@@ -14,7 +14,10 @@ namespace WebAPIOrderTracking
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile($"appsettings.json");
+            var config = configuration.Build();
             builder.Services.AddDbContext<OrderTrackingContext>(options =>
             {
                 options.UseSqlServer("name=Connection");
@@ -35,7 +38,7 @@ namespace WebAPIOrderTracking
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = "https://www.ordertracking.somee.com",
                 ValidAudience = "https://www.ordertracking.somee.com",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config.GetValue<string>("Secret:jwt")))
               };
               });
 
