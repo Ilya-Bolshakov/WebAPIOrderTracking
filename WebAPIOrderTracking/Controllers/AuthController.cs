@@ -1,10 +1,4 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using WebAPIOrderTracking.Guards.Hashers;
 using WebAPIOrderTracking.Guards.Interfaces;
 using WebAPIOrderTracking.Models.Authefication;
 using WebAPIOrderTracking.Models.Entities;
@@ -29,7 +23,7 @@ namespace WebAPIOrderTracking.Controllers
         {
             if (loginModel is null)
             {
-                return BadRequest("Invalid client request");
+                return BadRequest(new { message = "Invalid client request" });
             }
             var users = _context.Users;
 
@@ -44,13 +38,13 @@ namespace WebAPIOrderTracking.Controllers
                 }
                 else
                 {
-                    return Conflict(new { error = result });
+                    return Conflict(new { message = result });
                 }
                 
             }
             else
             {
-                return Conflict(new { error = "Неправильный логин" });
+                return Conflict(new { message = "Неправильный логин" });
             }
             
         }
