@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebAPIOrderTracking.Guards;
-using WebAPIOrderTracking.Models;
+using WebAPIOrderTracking.Models.Authefication;
 using WebAPIOrderTracking.Models.Entities;
 
 namespace WebAPIOrderTracking.Controllers
